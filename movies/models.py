@@ -21,3 +21,10 @@ class MovieView(models.Model):
 
 	def __str__(self):
 		return self.view_date.strftime("%Y-%m-%d")
+
+class MovieListTitle(models.Model):
+	uid = models.CharField(max_length=4, primary_key=True)
+	title = models.CharField(max_length=100)
+
+	def __str__(self):
+		return self.title
