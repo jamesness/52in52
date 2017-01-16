@@ -7,7 +7,7 @@ from django.db import models
 class Movie(models.Model):
 	uid = models.CharField(max_length=10, primary_key=True)
 	title = models.CharField(max_length=200)
-	title_sort = models.CharField(max_length=200)
+	sorted_title = models.CharField(max_length=200)
 	original_title = models.CharField(max_length=200,null=True,blank=True)
 	production_year = models.DateField()
 	director = models.CharField(max_length=200)

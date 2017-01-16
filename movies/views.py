@@ -12,7 +12,7 @@ from .forms import MovieSearchForm
 omdbapi = "https://www.omdbapi.com/?type=movie&%s=%s"
 
 def mmlt(request, listyear=timezone.now().year):
-	movie_list = Movie.objects.filter(movieview__view_date__year=listyear)
+	movie_list = Movie.objects.filter(movieview__view_date__year=listyear).distinct().order_by('sorted_title')
 	try:
 		list_title = MovieListTitle.objects.get(year=listyear)
 	except MovieListTitle.DoesNotExist:
@@ -61,6 +61,7 @@ def addview(request):
 			m = Movie(
 				uid = data['imdbID'],
 				title = data['Title'],
+				title_sort = data ['Title'],
 				production_year = parser.parse(data['Year']),
 				director = data['Director'],
 			)
