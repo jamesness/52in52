@@ -7,6 +7,7 @@ from django.db import models
 class Movie(models.Model):
 	uid = models.CharField(max_length=10, primary_key=True)
 	title = models.CharField(max_length=200)
+	title_sort = models.CharField(max_length=200)
 	original_title = models.CharField(max_length=200,null=True,blank=True)
 	production_year = models.DateField()
 	director = models.CharField(max_length=200)
@@ -14,6 +15,9 @@ class Movie(models.Model):
 
 	def __str__(self):
 		return self.title
+
+	def prod_year(self):
+		return self.production_year.year
 
 class MovieView(models.Model):
 	uid = models.ForeignKey(Movie, on_delete=models.CASCADE)

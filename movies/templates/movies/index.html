@@ -1,0 +1,17 @@
+<p>Years: <a href="{% url 'movies:mmlt' '2017' %}">2017</a> | <a href="{% url 'movies:mmlt' '2016' %}">2016</a></p>
+<p>Just saw a movie and posted about it on Facebook?  Add it here:</p>
+<form action="{% url 'movies:moviesearch' %}" method="get">
+<p><input type="text" name="search" size="50"/> <input type="submit" value="search"/></p>
+</form>
+<p>Even if you find the movie on the list below, we want to know about it, because we want data.<br/>
+Sweet, delicious data.</p>
+{% if yearly_movie_list %}
+<h1>{{ list_title }}</h1>
+<ul>
+{% for movie in yearly_movie_list %}
+	<li><b><a href="http://www.imdb.com/title/{{ movie.uid }}">{{ movie.title }}</a></b> ({{ movie.director }}: {{ movie.prod_year }})</li> 
+{% endfor %}
+</ul>
+{% else %}
+<p>Sorry, no data exists for this year</p>
+{% endif %}

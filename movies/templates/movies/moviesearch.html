@@ -1,0 +1,18 @@
+<form name="choosemovie" action="{% url 'movies:addview' %}" method="post">
+{% csrf_token %}
+<ul>
+{% for d in jsondata %}
+<li><input type="radio" name="imdbid" id="choice{{ forloop.counter }}" value="{{ d.imdbID }}"/>{{ d.Title }} ({{ d.Year }})</li>
+{% endfor %}
+</ul>
+<p>Date you watched: <input type="date" name="viewdate"/><br/>
+(I mean, we really only need the correct year, but accuracy is appreciated)<br/>
+<input type="submit" value="engage!"/></p>
+</form>
+<p>(Search results made possible by the <a href="https://www.omdbapi.com">OMDb API</a>.)</p>
+<p>If you don't see what you're looking for, please refine your search.</p>
+<form action="{% url 'movies:moviesearch' %}" method="get">
+<p><input type="text" name="search" value="{{ searchstring }}" size="50"/> <input type="submit" value="search"/></p>
+</form>
+<p>You can also directly search via the IMDB ID (ttXXXXXXX)!</p>
+<p>As a last resort, you can add a movie in manually (coming soon).</p>
