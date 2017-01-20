@@ -12,18 +12,17 @@ Sweet, delicious data.</p>
 <h1>{{ list_title }}</h1>
 <table>
 	<tr>
-		<th>Number</th>
-		<th>Poster</th>
+		<th>&nbsp;</th>
 		<th>Rating</th>
 		<th>Views</th>
-		<th>Movie</th>
+		<th colspan="2">Movie</th>
 	</tr>
 {% for movie in yearly_movie_list %}
 	<tr>
 		<td>{{ forloop.counter }}</td>
-		<td>{% if movie.poster != 'N/A' %}<img src="{{ movie.poster }}" width="25px"/>{% else %}&nbsp;{% endif %}</td>
-		<td>&nbsp;</td>
+		<td>{% if movie.viewrating != 'No ratings' %}{{ movie.viewrating }}{% else %}&nbsp;{% endif %}</td>
 		<td>{{ movie.viewcount }}</td>
+		<td>{% if movie.poster != 'N/A' %}<img src="{{ movie.poster }}" width="25px"/>{% else %}&nbsp;{% endif %}</td>
 		<td><a href="{% url 'movies:moviedetails' movie.uid %}">{{ movie.title }}</a></td>
 	</tr>
 	{# <li><b><a href="{% url 'movies:moviedetails' movie.uid %}">{{ movie.title }}</a></b> ({{ movie.director }}: {{ movie.prod_year }})</li>#}

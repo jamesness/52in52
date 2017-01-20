@@ -23,6 +23,15 @@ class Movie(models.Model):
 	def viewcount(self):
 		return self.movieview_set.all().count()
 
+	def viewrating(self):
+		ratings = self.movieview_set.filter(rating__isnull=False)
+		if ratings.count() > 0:
+			temp_total = 0
+			for r in ratings: temp_total += r.rating
+			return round(float(temp_total) / ratings.count(), 1)
+		else:
+			return "No ratings"
+		
 class MovieView(models.Model):
 	uid = models.ForeignKey(Movie, on_delete=models.CASCADE)
 	view_date = models.DateField()

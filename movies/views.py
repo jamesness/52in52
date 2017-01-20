@@ -54,7 +54,6 @@ def addview(request):
 	try:
 		m = Movie.objects.get(uid=temp_uid)
 		# Already exists, just add a viewing
-		m.movieview_set.create(view_date=temp_viewdate)
 	except Movie.DoesNotExist:
 		# Need to add movie, and a viewing
 		response = urllib.urlopen(omdbapi % ('i', temp_uid))
@@ -75,7 +74,7 @@ def addview(request):
 			else: m.sorted_title = m.title
 
 			m.save()
-			m.movieview_set.create(view_date=temp_viewdate)
+	m.movieview_set.create(view_date=temp_viewdate,rating=request.POST['userrating'],ip=request.META['REMOTE_ADDR'])
 	return redirect('/movies/')
 
 def movieinfo(request, movie_id):
@@ -86,8 +85,7 @@ def movieinfo(request, movie_id):
 	return render(request, 'movies/movieinfo.html', context)
 	
 def testview(request):
-	view_list = MovieView.objects.filter(view_date__year=2017)
 	context = {
-		'view_list': view_list,
+		'test': request.META,
 	}
 	return render(request, 'movies/test.html', context)
