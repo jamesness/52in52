@@ -25,6 +25,9 @@ class Movie(models.Model):
 class MovieView(models.Model):
 	uid = models.ForeignKey(Movie, on_delete=models.CASCADE)
 	view_date = models.DateField()
+	rating = models.PositiveSmallIntegerField(null=True,blank=True)
+	viewer = models.CharField(max_length=100,null=True,blank=True)
+	ip = models.GenericIPAddressField(default='127.0.0.1')
 
 	def __str__(self):
 		return self.view_date.strftime("%Y-%m-%d")
