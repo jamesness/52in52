@@ -1,3 +1,6 @@
+{% extends "movies/standard.html" %}
+
+{% block main_content %}
 <form name="choosemovie" action="{% url 'movies:addview' %}" method="post">
 {% csrf_token %}
 <ul>
@@ -16,3 +19,4 @@
 </form>
 <p>You can also directly search via the IMDB ID (ttXXXXXXX)!</p>
 <p>As a last resort, you can add a movie in manually (coming soon).</p>
+{% endblock %}

@@ -61,12 +61,17 @@ def addview(request):
 			m = Movie(
 				uid = data['imdbID'],
 				title = data['Title'],
-				title_sort = data ['Title'],
+				sorted_title = data ['Title'],
 				production_year = parser.parse(data['Year']),
 				director = data['Director'],
 			)
 			if data['Poster']:
 				m.poster = data['Poster']
+			if re.match('^The ',m.title): m.sorted_title = re.sub('^The ','',m.title)
+			elif re.match('^A ',m.title): m.sorted_title = re.sub('^A ','',m.title)
+			elif re.match('^An ',m.title): m.sorted_title = re.sub('^An ','',m.title)
+			else: m.sorted_title = m.title
+
 			m.save()
 			m.movieview_set.create(view_date=temp_viewdate)
 	return redirect('/movies/')
@@ -74,3 +79,11 @@ def addview(request):
 def testform(request):
 	form = MovieSearchForm()
 	return render(request, 'movies/testform.html', {'form': form})
+
+def movieinfo(request, movie_id):
+	movie = Movie.objects.get(pk=movie_id)
+	context = {
+		'movie': movie,
+	}
+	return render(request, 'movies/movieinfo.html', context)
+	
