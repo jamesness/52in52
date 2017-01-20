@@ -6,13 +6,14 @@ from django.utils import timezone
 from dateutil import parser
 import json, urllib, re
 
-from .models import Movie, MovieListTitle
+from .models import Movie, MovieListTitle, MovieView
 from .forms import MovieSearchForm
 
 omdbapi = "https://www.omdbapi.com/?type=movie&%s=%s"
 
 def mmlt(request, listyear=timezone.now().year):
 	movie_list = Movie.objects.filter(movieview__view_date__year=listyear).distinct().order_by('sorted_title')
+	view_list = MovieView.objects.filter(view_date__year=listyear)
 	try:
 		list_title = MovieListTitle.objects.get(year=listyear)
 	except MovieListTitle.DoesNotExist:
@@ -22,6 +23,7 @@ def mmlt(request, listyear=timezone.now().year):
 		'listyear' : listyear,
 		'list_title' : list_title,
 		'yearly_movie_list': movie_list,
+		'view_list': view_list,
 	}
 	return render(request, 'movies/index.html', context)
 
@@ -76,10 +78,6 @@ def addview(request):
 			m.movieview_set.create(view_date=temp_viewdate)
 	return redirect('/movies/')
 
-def testform(request):
-	form = MovieSearchForm()
-	return render(request, 'movies/testform.html', {'form': form})
-
 def movieinfo(request, movie_id):
 	movie = Movie.objects.get(pk=movie_id)
 	context = {
@@ -87,3 +85,9 @@ def movieinfo(request, movie_id):
 	}
 	return render(request, 'movies/movieinfo.html', context)
 	
+def testview(request):
+	view_list = MovieView.objects.filter(view_date__year=2017)
+	context = {
+		'view_list': view_list,
+	}
+	return render(request, 'movies/test.html', context)

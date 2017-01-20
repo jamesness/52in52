@@ -25,7 +25,7 @@ SECRET_KEY = '&-1b34r5b7ld6uz9h)j780hl=ssj2j8y@e@q!gk88c0!&b&^0l'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['testpad.jgumby.com']
+ALLOWED_HOSTS = ['testpad.jgumby.com','127.0.0.1']
 
 
 # Application definition

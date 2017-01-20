@@ -18,6 +18,9 @@ class Movie(models.Model):
 
 	def prod_year(self):
 		return self.production_year.year
+	
+	def viewcount(self):
+		return self.movieview_set.all().count()
 
 class MovieView(models.Model):
 	uid = models.ForeignKey(Movie, on_delete=models.CASCADE)

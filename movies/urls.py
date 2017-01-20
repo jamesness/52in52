@@ -9,4 +9,5 @@ urlpatterns = [
 	url(r'^moviesearch/$', views.moviesearch, name='moviesearch'),
 	url(r'^addview/$', views.addview, name='addview'),
 	url(r'^details/(?P<movie_id>tt[0-9]+)/$', views.movieinfo, name='moviedetails'),
+	url(r'^test/$', views.testview, name='testview'),
 ]
